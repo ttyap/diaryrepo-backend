@@ -7,6 +7,7 @@ const todolistController = require("./controllers/todolistcontroller");
 const diaryController = require("./controllers/dairyController");
 const userController = require("./controllers/userController");
 const moodController = require("./controllers/moodController");
+const cors = require("cors");
 
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
@@ -14,6 +15,7 @@ const todolistModel = require("./models/todolistModel");
 const app = express();
 const port = 5000;
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
 // =======================================
 //              MONGOOSE

@@ -2,14 +2,15 @@ const moodModel = require("../models/moodModel");
 
 const moodController = {
   createMood: (req, res) => {
-    userAuth();
+    console.log(req.body);
+    // userAuth();
     moodModel
       .create({
-        username: userData.username,
-        mood: req.body.number,
+        mood: parseInt(req.body.mood),
         created_at: Date.now(),
       })
       .then((moodResult) => {
+        console.log(moodResult);
         res.json({
           success: true,
           message: "mood created",

@@ -66,9 +66,8 @@ const userController = {
           });
           return;
         }
+        console.log(result);
         const hash = SHA256(result.pwsalt + req.body.password).toString();
-        console.log(result.pwsalt);
-        console.log(hash);
 
         if (hash !== result.hash) {
           res.statusCode = 401;
@@ -100,6 +99,7 @@ const userController = {
       })
 
       .catch((err) => {
+        console.log(err);
         res.statusCode = 500;
         res.json({
           success: false,

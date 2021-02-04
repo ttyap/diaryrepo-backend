@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const moodSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    max: 100,
-  },
+  // username: {
+  //   type: String,
+  //   required: true,
+  //   max: 100,
+  // },
   mood: {
     type: Number,
   },
