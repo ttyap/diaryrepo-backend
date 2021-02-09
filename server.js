@@ -30,7 +30,7 @@ mongoose.set("useFindAndModify", false);
 //** User **
 app.post("/api/v1/user/register", userController.userRegister); // registration
 app.post("/api/v1/user/login", userController.userLogin); // login
-app.get("/api/v1/users/me", userController.userProfile); // get user profile
+app.get("/api/v1/user/me", userController.userProfile); // get user profile
 
 //** Diary route **
 app.get("/api/v1/diaryentry", diaryController.listDiaryEntry); // get diary entry list

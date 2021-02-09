@@ -66,7 +66,6 @@ const userController = {
           });
           return;
         }
-        console.log(result);
         const hash = SHA256(result.pwsalt + req.body.password).toString();
 
         if (hash !== result.hash) {
@@ -109,30 +108,22 @@ const userController = {
   },
 
   userProfile(req, res) {
-    const authToken = req.headers.auth_token;
-    if (!authToken) {
-      res.json({
-        success: false,
-        message: "Auth header value is missing",
+    const user = jwt.decode(req.headers["token"]);
+    userModel
+      .find({
+        username: user.username,
+      })
+      .then((userResult) => {
+        res.json({
+          success: true,
+          message: "user listed",
+          user: userResult,
+        });
+        return;
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      return;
-    }
-    try {
-      const userData = jwt.verify(authToken, process.env.JWT_SECRET, {
-        algorithms: ["HS384"],
-      });
-
-      res.json({
-        success: true,
-        user: userData,
-      });
-    } catch (err) {
-      res.json({
-        success: false,
-        message: "Auth token is invalid",
-      });
-      return;
-    }
   },
 };
 

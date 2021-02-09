@@ -13,7 +13,6 @@ const dairySchema = new mongoose.Schema({
   created_at: {
     type: Date,
     required: true,
-    default: Date.now,
   },
 });
 

@@ -1,17 +1,19 @@
 const todolistModel = require("../models/todolistModel");
+const jwt = require("jsonwebtoken");
 
 const todolistController = {
   listTask: (req, res) => {
-    userAuth();
+    const user = jwt.decode(req.headers["token"]);
     todolistModel
-      .findOne({
-        username: userData.username,
+      .find({
+        username: user.username,
       })
       .then((taskResult) => {
+        console.log(taskResult);
         res.json({
           success: true,
           message: "task listed",
-          task: taskResult,
+          text: taskResult,
         });
         return;
       })
@@ -20,10 +22,10 @@ const todolistController = {
       });
   },
   createTask: (req, res) => {
-    // userAuth();
+    const user = jwt.decode(req.headers["token"]);
     todolistModel
       .create({
-        username: req.body.username,
+        username: user.username,
         text: req.body.text,
         task_status: "pending",
         created_at: Date.now(),
@@ -42,11 +44,10 @@ const todolistController = {
   },
   updateTask: (req, res) => {
     const updateTask = {
-      text: req.body.text,
+      // text: req.body.text,
       task_status: req.body.task_status,
     };
 
-    // userAuth();
     todolistModel
       .updateOne(
         {
@@ -72,7 +73,6 @@ const todolistController = {
       });
   },
   removeTask: (req, res) => {
-    userAuth();
     todolistModel
       .findOneAndDelete({
         _id: req.params.id,
@@ -94,28 +94,4 @@ const todolistController = {
   },
 };
 
-function userAuth() {
-  const authToken = req.headers.auth_token;
-  let userData;
-
-  if (!authToken) {
-    res.json({
-      success: false,
-      message: "Auth header value is missing",
-    });
-    return;
-  }
-  try {
-    userData = jwt.verify(authToken, process.env.JWT_SECRET, {
-      algorithms: ["HS384"],
-    });
-  } catch (err) {
-    console.log(err);
-    res.json({
-      success: false,
-      message: "Auth token is invalid",
-    });
-    return;
-  }
-}
 module.exports = todolistController;

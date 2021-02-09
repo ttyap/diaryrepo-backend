@@ -1,17 +1,18 @@
 const diaryModel = require("../models/diaryModel");
+const jwt = require("jsonwebtoken");
 
 const diaryController = {
   listDiaryEntry: (req, res) => {
-    userAuth();
+    const user = jwt.decode(req.headers["token"]);
     diaryModel
-      .findOne({
-        username: userData.username,
+      .find({
+        username: user.username,
       })
       .then((diaryResult) => {
         res.json({
           success: true,
           message: "diary listed",
-          task: diaryResult,
+          text: diaryResult,
         });
         return;
       })
@@ -20,7 +21,6 @@ const diaryController = {
       });
   },
   getDiaryEntry: (req, res) => {
-    userAuth();
     diaryModel
       .findOne({
         _id: req.params.id,
@@ -39,10 +39,11 @@ const diaryController = {
   },
 
   createDiaryEntry: (req, res) => {
-    //userAuth();
+    const user = jwt.decode(req.headers["token"]);
+
     diaryModel
       .create({
-        username: req.body.username,
+        username: user.username,
         text: req.body.text,
         created_at: Date.now(),
       })
@@ -59,8 +60,7 @@ const diaryController = {
       });
   },
   editDiaryEntry: (req, res) => {
-    userAuth();
-    todolistModel
+    diaryModel
       .updateOne(
         {
           _id: req.params.id,
@@ -87,7 +87,6 @@ const diaryController = {
       });
   },
   deleteEntry: (req, res) => {
-    userAuth();
     diaryModel
       .findOneAndDelete({
         _id: req.params.id,
@@ -109,28 +108,4 @@ const diaryController = {
   },
 };
 
-function userAuth() {
-  const authToken = req.headers.auth_token;
-  let userData;
-
-  if (!authToken) {
-    res.json({
-      success: false,
-      message: "Auth header value is missing",
-    });
-    return;
-  }
-  try {
-    userData = jwt.verify(authToken, process.env.JWT_SECRET, {
-      algorithms: ["HS384"],
-    });
-  } catch (err) {
-    console.log(err);
-    res.json({
-      success: false,
-      message: "Auth token is invalid",
-    });
-    return;
-  }
-}
 module.exports = diaryController;
