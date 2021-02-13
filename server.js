@@ -36,13 +36,11 @@ app.get("/api/v1/user/me", userController.userProfile); // get user profile
 app.get("/api/v1/diaryentry", diaryController.listDiaryEntry); // get diary entry list
 app.post("/api/v1/diaryentry", diaryController.createDiaryEntry); // create diary entry
 app.get("/api/v1/diaryentry/:id", diaryController.getDiaryEntry); // get diary entry
-app.patch("/api/v1/diaryentry/:id", diaryController.editDiaryEntry); // edit diary entry
 app.delete("/api/v1/diaryentry/:id", diaryController.deleteEntry); // delete diary entry
 
 //** To-do list route **
 app.get("/api/v1/todolist", todolistController.listTask); // get to-do list
 app.post("/api/v1/todolist", todolistController.createTask); // create to-do task
-app.patch("/api/v1/todolist/:id", todolistController.updateTask); // edit to-do task
 app.delete("/api/v1/todolist/:id", todolistController.removeTask); // delete to-do task
 
 //** Mood route **
