@@ -38,24 +38,24 @@ const moodController = {
             _id: {
               $cond: {
                 if: {$eq: ["$mood", 1]},
-                then: "ANGRY",
+                then: "Angry",
                 else: {
                   $cond: {
                     if: {$eq: ["$mood", 2]},
-                    then: "SAD",
+                    then: "Sad",
                     else: {
                       $cond: {
                         if: {$eq: ["$mood", 3]},
-                        then: "MEH",
+                        then: "Meh",
                         else: {
                           $cond: {
                             if: {$eq: ["$mood", 4]},
-                            then: "GOOD",
+                            then: "Good",
                             else: {
                               $cond: {
                                 if: {$eq: ["$mood", 5]},
-                                then: "GREAT",
-                                else: "LOVED",
+                                then: "Gr8",
+                                else: "Loved",
                               },
                             },
                           },
