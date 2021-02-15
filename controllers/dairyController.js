@@ -5,11 +5,16 @@ const diaryController = {
   listDiaryEntry: (req, res) => {
     const user = jwt.decode(req.headers["token"]);
     diaryModel
-      .find({
-        username: user.username,
-      })
+      .find({ username: user.username},
+        {
+          'text': 1,
+          'created_at':1
+
+        }   ).sort({'created_at': -1})
       .then((diaryResult) => {
+        console.log(diaryResult)
         res.json({
+
           success: true,
           message: "diary listed",
           text: diaryResult,
