@@ -12,7 +12,6 @@ const diaryController = {
 
         }   ).sort({'created_at': -1})
       .then((diaryResult) => {
-        console.log(diaryResult)
         res.json({
 
           success: true,

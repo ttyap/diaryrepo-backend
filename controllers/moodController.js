@@ -32,7 +32,9 @@ const moodController = {
           $match: {
             username: user.username,
           },
+          
         },
+
         {
           $group: {
             _id: {
@@ -71,7 +73,7 @@ const moodController = {
             },
           },
         },
-      ])
+      ]).sort({'_id': -1})
       .then((moodResult) => {
         console.log(moodResult);
         res.json({
